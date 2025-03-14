@@ -45,4 +45,13 @@ class Photo < ApplicationRecord
     return nil unless user
     likes.find_by(fan: user)
   end
+  
+  # For compatibility with tests expecting CarrierWave
+  def image_identifier
+    if image.attached?
+      image.filename.to_s
+    else
+      nil
+    end
+  end
 end 

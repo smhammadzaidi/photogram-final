@@ -11,7 +11,8 @@
   
   <div class="photo-image">
     <% if @photo.image.attached? %>
-      <%= image_tag @photo.image, class: "img-fluid" %>
+      <%= image_tag_with_identifier @photo.image, class: "img-fluid" %>
+      <img src="<%= rails_blob_path(@photo.image) %>?filename=<%= @photo.image_identifier %>" class="img-fluid">
     <% else %>
       <p>No image attached</p>
     <% end %>

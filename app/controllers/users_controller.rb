@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by(username: params[:username]) || User.find(params[:id])
     @photos = @user.photos.order(created_at: :desc)
     
     if @user.private? && @user != current_user
@@ -17,7 +17,13 @@ class UsersController < ApplicationController
   end
   
   def feed
-    @photos = current_user.feed_photos.order(created_at: :desc)
+    if params[:username]
+      @user = User.find_by(username: params[:username])
+      @photos = @user.feed_photos.order(created_at: :desc)
+    else
+      @photos = current_user.feed_photos.order(created_at: :desc)
+    end
+    render :feed
   end
   
   def discover

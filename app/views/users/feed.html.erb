@@ -1,4 +1,8 @@
-<h1>Your Feed</h1>
+<% if @user && @user != current_user %>
+  <h1><%= @user.username %>'s Feed</h1>
+<% else %>
+  <h1>Your Feed</h1>
+<% end %>
 
 <div class="photos-container">
   <% if @photos.any? %>
@@ -30,8 +34,12 @@
     </div>
   <% else %>
     <div class="alert alert-info">
-      <p>Your feed is empty. Follow more users to see their photos here!</p>
-      <%= link_to "Find Users to Follow", users_path, class: "btn btn-primary" %>
+      <% if @user && @user != current_user %>
+        <p><%= @user.username %>'s feed is empty. They need to follow more users to see photos here!</p>
+      <% else %>
+        <p>Your feed is empty. Follow more users to see their photos here!</p>
+        <%= link_to "Find Users to Follow", users_path, class: "btn btn-primary" %>
+      <% end %>
     </div>
   <% end %>
 </div> 

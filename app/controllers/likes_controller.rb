@@ -16,7 +16,7 @@ class LikesController < ApplicationController
     if @like.fan == current_user
       photo = @like.photo
       @like.destroy
-      redirect_to photo, notice: "Photo was successfully unliked."
+      redirect_to photo, alert: "Photo was successfully unliked."
     else
       redirect_to @like.photo, alert: "You are not authorized to perform this action."
     end
@@ -25,6 +25,6 @@ class LikesController < ApplicationController
   private
   
   def like_params
-    params.require(:like).permit(:photo_id)
+    params.require(:like).permit(:photo_id, :fan_id)
   end
 end 

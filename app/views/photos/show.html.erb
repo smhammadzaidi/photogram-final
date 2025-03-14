@@ -45,6 +45,7 @@
       <% else %>
         <%= form_with(model: Like.new, local: true) do |form| %>
           <%= form.hidden_field :photo_id, value: @photo.id %>
+          <%= form.hidden_field :fan_id, value: current_user.id %>
           <%= form.submit "Like", class: "btn btn-sm btn-primary" %>
         <% end %>
       <% end %>
@@ -58,6 +59,7 @@
       <div class="comment-form">
         <%= form_with(model: @comment, local: true) do |form| %>
           <%= form.hidden_field :photo_id, value: @photo.id %>
+          <%= form.hidden_field :author_id, value: current_user.id %>
           <div class="form-group">
             <%= form.text_area :body, class: "form-control", placeholder: "Add a comment...", required: true %>
           </div>

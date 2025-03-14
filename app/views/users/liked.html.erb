@@ -1,7 +1,7 @@
 <h1>Photos You've Liked</h1>
 
 <div class="photos-container">
-  <% if @photos.any? %>
+  <% if @photos && @photos.any? %>
     <div class="row">
       <% @photos.each do |photo| %>
         <div class="col-md-4 mb-4">

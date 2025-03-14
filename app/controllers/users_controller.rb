@@ -28,16 +28,19 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @photos = @user.feed_photos.order(created_at: :desc)
     else
+      authenticate_user!
       @photos = current_user.feed_photos.order(created_at: :desc)
     end
     render :feed
   end
   
   def discover
+    authenticate_user!
     @photos = current_user.discovery_photos.order(created_at: :desc)
   end
   
   def liked
+    authenticate_user!
     @photos = Photo.joins(:likes).where(likes: { fan: current_user }).order(created_at: :desc)
   end
   

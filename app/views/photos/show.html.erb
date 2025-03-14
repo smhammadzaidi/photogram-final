@@ -10,7 +10,9 @@
   </div>
   
   <div class="photo-image">
-    <% if @photo.image.attached? %>
+    <% if defined?(@photo.image.url) && @photo.image.url %>
+      <%= image_tag @photo.image.url, class: "img-fluid" %>
+    <% elsif defined?(@photo.image.attached?) && @photo.image.attached? %>
       <%= image_tag @photo.image, class: "img-fluid" %>
     <% else %>
       <p>No image attached</p>

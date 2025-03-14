@@ -73,8 +73,10 @@
             <div class="col-md-4 mb-4">
               <div class="card">
                 <%= link_to photo_path(photo) do %>
-                  <% if photo.image? %>
+                  <% if defined?(photo.image.url) && photo.image.url %>
                     <%= image_tag photo.image.url, class: "card-img-top" %>
+                  <% elsif defined?(photo.image.attached?) && photo.image.attached? %>
+                    <%= image_tag photo.image, class: "card-img-top" %>
                   <% else %>
                     <div class="no-image">No image</div>
                   <% end %>

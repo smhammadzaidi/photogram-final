@@ -21,6 +21,7 @@
 #
 class Photo < ApplicationRecord
   # CarrierWave for image uploads
+  require 'carrierwave/orm/activerecord'
   mount_uploader :image, ImageUploader
   
   # Associations

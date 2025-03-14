@@ -40,12 +40,12 @@
   <div class="photo-actions">
     <% if user_signed_in? %>
       <% if @photo.liked_by?(current_user) %>
-        <%= button_to "Unlike", like_path(@photo.like_by(current_user)), method: :delete, class: "btn btn-sm btn-danger" %>
+        <%= link_to "Unlike", like_path(@photo.like_by(current_user)), method: :delete, data: { turbo_method: :delete }, class: "btn btn-sm btn-danger" %>
       <% else %>
         <%= form_with(model: Like.new, local: true) do |form| %>
           <%= form.hidden_field :photo_id, value: @photo.id %>
           <%= form.hidden_field :fan_id, value: current_user.id %>
-          <%= form.submit "Like", class: "btn btn-sm btn-primary" %>
+          <button type="submit" class="btn btn-sm btn-primary">Like</button>
         <% end %>
       <% end %>
     <% end %>

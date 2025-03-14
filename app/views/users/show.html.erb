@@ -1,7 +1,7 @@
 <div class="user-profile">
   <div class="profile-header">
     <h1><%= @user.username %></h1>
-    <p>Private: <%= @user.private? %></p>
+    <p>Private: <%= @user.private? ? "Yes" : "No" %></p>
     
     <% if user_signed_in? && current_user != @user %>
       <div class="follow-actions">
@@ -32,6 +32,14 @@
       <span class="label">Following</span>
     </div>
   </div>
+  
+  <% if user_signed_in? %>
+    <div class="user-links">
+      <%= link_to "Feed", "/users/#{@user.username}/feed", class: "btn btn-link" %>
+      <%= link_to "Liked photos", "/users/#{@user.username}/liked_photos", class: "btn btn-link" %>
+      <%= link_to "Discover", "/users/#{@user.username}/discover", class: "btn btn-link" %>
+    </div>
+  <% end %>
   
   <% if current_user == @user && @user.pending_received_follow_requests.any? %>
     <div class="pending-requests">

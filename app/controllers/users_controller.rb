@@ -6,17 +6,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    if params[:username]
-      @user = User.find_by(username: params[:username])
-    elsif params[:id]
-      @user = User.find(params[:id])
-    end
-    
-    if @user.nil?
-      redirect_to users_path, alert: "User not found."
-      return
-    end
-    
+    find_user
     @photos = @user.photos.order(created_at: :desc)
     
     if @user.private? && @user != current_user
@@ -34,6 +24,9 @@ class UsersController < ApplicationController
         return
       end
       @photos = @user.feed_photos.order(created_at: :desc)
+    elsif params[:id]
+      @user = User.find(params[:id])
+      @photos = @user.feed_photos.order(created_at: :desc)
     else
       @photos = current_user.feed_photos.order(created_at: :desc)
     end
@@ -46,5 +39,20 @@ class UsersController < ApplicationController
   
   def liked
     @photos = Photo.joins(:likes).where(likes: { fan: current_user }).order(created_at: :desc)
+  end
+  
+  private
+  
+  def find_user
+    if params[:username]
+      @user = User.find_by(username: params[:username])
+    elsif params[:id]
+      @user = User.find(params[:id])
+    end
+    
+    if @user.nil?
+      redirect_to users_path, alert: "User not found."
+      return
+    end
   end
 end 

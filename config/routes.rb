@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # Username-based routes - these need to be before resources :users
   get '/users/:username', to: 'users#show', as: 'username_user'
   get '/users/:username/feed', to: 'users#feed', as: 'username_feed'
+  get '/users/:username/liked_photos', to: 'users#liked', as: 'username_liked_photos'
+  get '/users/:username/discover', to: 'users#discover', as: 'username_discover'
   
   # Resources
   resources :photos
@@ -16,6 +18,11 @@ Rails.application.routes.draw do
   
   # User routes
   resources :users, only: [:index, :show] do
+    member do
+      get :feed
+      get :liked, path: 'liked_photos'
+      get :discover
+    end
     collection do
       get :feed
       get :discover

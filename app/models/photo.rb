@@ -37,10 +37,12 @@ class Photo < ApplicationRecord
   
   # Helper methods
   def liked_by?(user)
+    return false unless user
     likes.exists?(fan: user)
   end
   
   def like_by(user)
+    return nil unless user
     likes.find_by(fan: user)
   end
 end 

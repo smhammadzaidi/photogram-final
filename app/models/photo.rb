@@ -20,9 +20,8 @@
 #  fk_rails_...  (owner_id => users.id)
 #
 class Photo < ApplicationRecord
-  # CarrierWave for image uploads
-  require 'carrierwave/orm/activerecord'
-  mount_uploader :image, ImageUploader
+  # Active Storage for image uploads
+  has_one_attached :image
   
   # Associations
   belongs_to :owner, class_name: "User", foreign_key: :owner_id

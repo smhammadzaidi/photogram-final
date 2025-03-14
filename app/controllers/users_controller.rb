@@ -7,10 +7,14 @@ class UsersController < ApplicationController
   
   def show
     find_user
+    
+    # Return early if @user is nil (the find_user method will handle the redirect)
+    return unless @user
+    
     @photos = @user.photos.order(created_at: :desc)
     
     if @user.private? && @user != current_user
-      unless @user.accepted_received_follow_requests.exists?(sender: current_user)
+      unless current_user && @user.accepted_received_follow_requests.exists?(sender: current_user)
         redirect_to users_path, alert: "This account is private."
       end
     end
@@ -26,6 +30,10 @@ class UsersController < ApplicationController
       @photos = @user.feed_photos.order(created_at: :desc)
     elsif params[:id]
       @user = User.find(params[:id])
+      if @user.nil?
+        redirect_to users_path, alert: "User not found."
+        return
+      end
       @photos = @user.feed_photos.order(created_at: :desc)
     else
       authenticate_user!

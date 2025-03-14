@@ -1,3 +1,4 @@
+<% if @user %>
 <div class="user-profile">
   <div class="profile-header">
     <h1><%= @user.username %></h1>
@@ -65,7 +66,7 @@
   <% else %>
     <div class="user-photos">
       <h2>Photos (<%= @user.photos.count %>)</h2>
-      <% if @photos.any? %>
+      <% if @photos && @photos.any? %>
         <div class="row">
           <% @photos.each do |photo| %>
             <div class="col-md-4 mb-4">
@@ -94,4 +95,10 @@
       <% end %>
     </div>
   <% end %>
-</div> 
+</div>
+<% else %>
+<div class="alert alert-danger">
+  <p>User not found.</p>
+  <%= link_to "Back to Users", users_path, class: "btn btn-primary" %>
+</div>
+<% end %> 

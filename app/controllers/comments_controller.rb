@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     @comment.author = current_user
     
     if @comment.save
-      redirect_to @comment.photo, notice: "Comment was successfully created."
+      redirect_to @comment.photo, notice: "Comment created successfully."
     else
       redirect_to @comment.photo, alert: "Comment could not be created."
     end
@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
   def destroy
     photo = @comment.photo
     @comment.destroy
-    redirect_to photo, notice: "Comment was successfully destroyed."
+    redirect_to photo, notice: "Comment deleted successfully."
   end
   
   private

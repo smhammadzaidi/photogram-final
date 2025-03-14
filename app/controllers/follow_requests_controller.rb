@@ -4,7 +4,7 @@ class FollowRequestsController < ApplicationController
     @follow_request.sender = current_user
     
     if @follow_request.save
-      redirect_to user_path(@follow_request.recipient), notice: "Follow request was successfully sent."
+      redirect_to user_path(@follow_request.recipient), notice: "Follow request created successfully."
     else
       redirect_to user_path(@follow_request.recipient), alert: "Follow request could not be sent."
     end
@@ -15,7 +15,7 @@ class FollowRequestsController < ApplicationController
     
     if @follow_request.recipient == current_user
       if @follow_request.update(status: params[:status])
-        redirect_to user_path(current_user), notice: "Follow request was successfully updated."
+        redirect_to user_path(current_user), notice: "Follow request updated successfully."
       else
         redirect_to user_path(current_user), alert: "Follow request could not be updated."
       end
@@ -29,7 +29,7 @@ class FollowRequestsController < ApplicationController
     
     if @follow_request.sender == current_user || @follow_request.recipient == current_user
       @follow_request.destroy
-      redirect_to user_path(current_user), notice: "Follow request was successfully destroyed."
+      redirect_to user_path(current_user), notice: "Follow request deleted successfully."
     else
       redirect_to user_path(current_user), alert: "You are not authorized to perform this action."
     end

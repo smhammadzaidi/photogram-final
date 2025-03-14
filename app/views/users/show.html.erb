@@ -3,6 +3,7 @@
   <div class="profile-header">
     <h1><%= @user.username %></h1>
     <p>Private: <%= @user.private? ? "Yes" : "No" %></p>
+    <p>Private value: <%= @user.private.to_s %></p>
     
     <% if user_signed_in? && current_user != @user %>
       <div class="follow-actions">
@@ -72,8 +73,8 @@
             <div class="col-md-4 mb-4">
               <div class="card">
                 <%= link_to photo_path(photo) do %>
-                  <% if photo.image.attached? %>
-                    <%= image_tag photo.image, class: "card-img-top" %>
+                  <% if photo.image? %>
+                    <%= image_tag photo.image.url, class: "card-img-top" %>
                   <% else %>
                     <div class="no-image">No image</div>
                   <% end %>
@@ -85,6 +86,7 @@
                     <span><i class="fa fa-comment"></i> <%= photo.comments.count %> comments</span>
                     <p><small class="text-muted">Posted <%= time_ago_in_words(photo.created_at) %> ago</small></p>
                   </div>
+                  <%= link_to "Show details", photo_path(photo), class: "btn btn-sm btn-primary" %>
                 </div>
               </div>
             </div>

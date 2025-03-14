@@ -1,0 +1,38 @@
+<h1>Photos</h1>
+
+<div class="photos-container">
+  <% if @photos.any? %>
+    <% @photos.each do |photo| %>
+      <div class="photo-card">
+        <div class="photo-header">
+          <h3><%= link_to photo.owner.username, user_path(photo.owner) %></h3>
+        </div>
+        
+        <div class="photo-image">
+          <%= link_to photo_path(photo) do %>
+            <% if photo.image.attached? %>
+              <%= image_tag photo.image %>
+            <% else %>
+              <p>No image attached</p>
+            <% end %>
+          <% end %>
+        </div>
+        
+        <div class="photo-details">
+          <p><strong>Caption:</strong> <%= photo.caption %></p>
+          <p><strong>Likes:</strong> <%= photo.likes.count %></p>
+          <p><strong>Comments:</strong> <%= photo.comments.count %></p>
+          <p><strong>Posted:</strong> <%= time_ago_in_words(photo.created_at) %> ago</p>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No photos found.</p>
+  <% end %>
+</div>
+
+<% if user_signed_in? %>
+  <div class="actions">
+    <%= link_to "Add New Photo", new_photo_path, class: "btn btn-primary" %>
+  </div>
+<% end %> 

@@ -1,0 +1,37 @@
+<h1>Edit Photo</h1>
+
+<%= form_with(model: @photo, local: true, html: { multipart: true }) do |form| %>
+  <% if @photo.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
+      <ul>
+        <% @photo.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <% if @photo.image.attached? %>
+      <div class="current-image">
+        <p>Current Image:</p>
+        <%= image_tag @photo.image, class: "img-thumbnail", style: "max-width: 300px;" %>
+      </div>
+    <% end %>
+    
+    <%= form.label :image, "Change Image" %>
+    <%= form.file_field :image, class: "form-control" %>
+    <small class="form-text text-muted">Leave blank to keep the current image</small>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :caption %>
+    <%= form.text_area :caption, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Update Photo", class: "btn btn-primary" %>
+    <%= link_to "Cancel", photo_path(@photo), class: "btn btn-secondary" %>
+  </div>
+<% end %> 

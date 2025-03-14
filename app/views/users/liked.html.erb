@@ -1,0 +1,41 @@
+<h1>Photos You've Liked</h1>
+
+<div class="photos-container">
+  <% if @photos.any? %>
+    <div class="row">
+      <% @photos.each do |photo| %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <%= link_to photo.owner.username, user_path(photo.owner) %>
+            </div>
+            <%= link_to photo_path(photo) do %>
+              <% if photo.image.attached? %>
+                <%= image_tag photo.image, class: "card-img-top" %>
+              <% else %>
+                <div class="no-image">No image</div>
+              <% end %>
+            <% end %>
+            <div class="card-body">
+              <p class="card-text"><%= truncate(photo.caption, length: 100) %></p>
+              <div class="photo-stats">
+                <span><i class="fa fa-heart"></i> <%= photo.likes.count %></span>
+                <span><i class="fa fa-comment"></i> <%= photo.comments.count %></span>
+                <small class="text-muted"><%= time_ago_in_words(photo.created_at) %> ago</small>
+              </div>
+              <% if photo.liked_by?(current_user) %>
+                <% like = photo.like_by(current_user) %>
+                <%= link_to "Unlike", like_path(like), method: :delete, class: "btn btn-sm btn-danger" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <p>You haven't liked any photos yet.</p>
+      <%= link_to "Browse Photos", photos_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div> 

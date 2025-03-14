@@ -32,7 +32,7 @@
           <%= form.text_area :caption, class: "form-control" %>
         </div>
         <div class="actions">
-          <%= form.submit "Update photo", class: "btn btn-primary" %>
+          <button type="submit" class="btn btn-primary">Update photo</button>
         </div>
       <% end %>
     </div>
@@ -64,7 +64,7 @@
             <%= form.label :body, "Comment" %>
             <%= form.text_area :body, class: "form-control", placeholder: "Add a comment...", required: true %>
           </div>
-          <%= form.submit "Post Comment", class: "btn btn-primary" %>
+          <button type="submit" class="btn btn-primary">Add comment</button>
         <% end %>
       </div>
     <% end %>

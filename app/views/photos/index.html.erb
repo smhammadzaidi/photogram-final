@@ -10,8 +10,8 @@
         
         <div class="photo-image">
           <%= link_to photo_path(photo) do %>
-            <% if photo.image.attached? %>
-              <%= image_tag photo.image %>
+            <% if photo.image? %>
+              <%= image_tag photo.image.url %>
             <% else %>
               <p>No image attached</p>
             <% end %>

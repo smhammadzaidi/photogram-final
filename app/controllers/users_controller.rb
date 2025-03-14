@@ -13,11 +13,8 @@ class UsersController < ApplicationController
     
     @photos = @user.photos.order(created_at: :desc)
     
-    if @user.private? && @user != current_user
-      unless current_user && @user.accepted_received_follow_requests.exists?(sender: current_user)
-        redirect_to users_path, alert: "This account is private."
-      end
-    end
+    # We'll let the view handle showing/hiding content for private accounts
+    # instead of redirecting
   end
   
   def feed

@@ -9,7 +9,7 @@
       <div class="follow-actions">
         <% if current_user.following.include?(@user) %>
           <% follow_request = current_user.sent_follow_requests.find_by(recipient: @user) %>
-          <%= link_to "Unfollow", follow_request_path(follow_request), method: :delete, data: { turbo_method: :delete }, class: "btn btn-sm btn-danger" %>
+          <a href="<%= follow_request_path(follow_request) %>" data-turbo-method="delete" class="btn btn-sm btn-danger">Unfollow</a>
         <% else %>
           <%= form_with(model: FollowRequest.new, local: true) do |form| %>
             <%= form.hidden_field :recipient_id, value: @user.id %>

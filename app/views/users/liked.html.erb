@@ -25,7 +25,7 @@
               </div>
               <% if photo.liked_by?(current_user) %>
                 <% like = photo.like_by(current_user) %>
-                <%= link_to "Unlike", like_path(like), method: :delete, class: "btn btn-sm btn-danger" %>
+                <%= button_to "Unlike", like_path(like), method: :delete, class: "btn btn-sm btn-danger" %>
               <% end %>
             </div>
           </div>

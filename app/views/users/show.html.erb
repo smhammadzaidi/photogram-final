@@ -7,7 +7,7 @@
       <div class="follow-actions">
         <% if current_user.following.include?(@user) %>
           <% follow_request = current_user.sent_follow_requests.find_by(recipient: @user) %>
-          <%= link_to "Unfollow", follow_request_path(follow_request), method: :delete, class: "btn btn-sm btn-danger" %>
+          <%= button_to "Unfollow", follow_request_path(follow_request), method: :delete, class: "btn btn-sm btn-danger" %>
         <% else %>
           <%= form_with(model: FollowRequest.new, local: true) do |form| %>
             <%= form.hidden_field :recipient_id, value: @user.id %>
@@ -49,8 +49,8 @@
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <%= link_to request.sender.username, user_path(request.sender) %>
             <div class="btn-group">
-              <%= link_to "Accept", follow_request_path(request, status: "accepted"), method: :patch, class: "btn btn-sm btn-success" %>
-              <%= link_to "Reject", follow_request_path(request, status: "rejected"), method: :patch, class: "btn btn-sm btn-danger" %>
+              <%= button_to "Accept", follow_request_path(request, status: "accepted"), method: :patch, class: "btn btn-sm btn-success" %>
+              <%= button_to "Reject", follow_request_path(request, status: "rejected"), method: :patch, class: "btn btn-sm btn-danger" %>
             </div>
           </li>
         <% end %>

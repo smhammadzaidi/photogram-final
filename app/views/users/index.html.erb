@@ -27,15 +27,12 @@
               <td>
                 <% if current_user.following.include?(user) %>
                   <% follow_request = current_user.sent_follow_requests.find_by(recipient: user) %>
-                  <%= button_to "Unfollow", follow_request_path(follow_request), method: :delete, class: "btn btn-sm btn-danger" %>
+                  <%= link_to "Unfollow", follow_request_path(follow_request), method: :delete, data: { turbo_method: :delete }, class: "btn btn-sm btn-danger" %>
                 <% elsif current_user.sent_follow_requests.pending.exists?(recipient: user) %>
                   <span>Request sent</span>
-                  <%= button_to "Cancel", follow_request_path(current_user.sent_follow_requests.find_by(recipient: user)), method: :delete, class: "btn btn-sm btn-secondary" %>
+                  <%= link_to "Cancel", follow_request_path(current_user.sent_follow_requests.find_by(recipient: user)), method: :delete, data: { turbo_method: :delete }, class: "btn btn-sm btn-secondary" %>
                 <% else %>
-                  <%= form_with(model: FollowRequest.new, local: true) do |form| %>
-                    <%= form.hidden_field :recipient_id, value: user.id %>
-                    <%= form.submit "Follow", class: "btn btn-sm btn-primary" %>
-                  <% end %>
+                  <%= button_to "Follow", follow_requests_path(follow_request: { recipient_id: user.id }), class: "btn btn-sm btn-primary" %>
                 <% end %>
               </td>
             <% elsif user_signed_in? %>

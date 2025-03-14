@@ -2,41 +2,49 @@
 
 <div class="users-container">
   <% if @users.any? %>
-    <div class="row">
-      <% @users.each do |user| %>
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><%= link_to user.username, user_path(user) %></h5>
-              <p class="card-text">
-                <% if user.private? %>
-                  <span class="badge badge-secondary">Private</span>
-                <% else %>
-                  <span class="badge badge-success">Public</span>
-                <% end %>
-              </p>
-              <p class="card-text">Photos: <%= user.photos.count %></p>
-              <p class="card-text">Followers: <%= user.followers.count %></p>
-              <p class="card-text">Following: <%= user.following.count %></p>
-              
-              <% if user_signed_in? && current_user != user %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Private</th>
+          <th>Photos</th>
+          <th>Followers</th>
+          <th>Following</th>
+          <% if user_signed_in? %>
+            <th>Actions</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= link_to user.username, user_path(user) %></td>
+            <td><%= user.private? ? "Yes" : "No" %></td>
+            <td><%= user.photos.count %></td>
+            <td><%= user.followers.count %></td>
+            <td><%= user.following.count %></td>
+            <% if user_signed_in? && current_user != user %>
+              <td>
                 <% if current_user.following.include?(user) %>
                   <% follow_request = current_user.sent_follow_requests.find_by(recipient: user) %>
                   <%= link_to "Unfollow", follow_request_path(follow_request), method: :delete, class: "btn btn-sm btn-danger" %>
                 <% elsif current_user.sent_follow_requests.pending.exists?(recipient: user) %>
-                  <span class="badge badge-warning">Request Pending</span>
+                  <span>Request sent</span>
+                  <%= link_to "Cancel", follow_request_path(current_user.sent_follow_requests.find_by(recipient: user)), method: :delete %>
                 <% else %>
                   <%= form_with(model: FollowRequest.new, local: true) do |form| %>
                     <%= form.hidden_field :recipient_id, value: user.id %>
                     <%= form.submit "Follow", class: "btn btn-sm btn-primary" %>
                   <% end %>
                 <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
+              </td>
+            <% elsif user_signed_in? %>
+              <td>You</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% else %>
     <p>No users found.</p>
   <% end %>

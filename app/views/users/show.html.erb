@@ -1,11 +1,7 @@
 <div class="user-profile">
   <div class="profile-header">
     <h1><%= @user.username %></h1>
-    <% if @user.private? %>
-      <span class="badge badge-secondary">Private</span>
-    <% else %>
-      <span class="badge badge-success">Public</span>
-    <% end %>
+    <p>Private: <%= @user.private? ? "Yes" : "No" %></p>
     
     <% if user_signed_in? && current_user != @user %>
       <div class="follow-actions">
@@ -76,7 +72,7 @@
                   <% end %>
                 <% end %>
                 <div class="card-body">
-                  <p class="card-text"><%= truncate(photo.caption, length: 50) %></p>
+                  <p class="card-text"><%= photo.caption %></p>
                   <div class="photo-stats">
                     <span><i class="fa fa-heart"></i> <%= photo.likes.count %></span>
                     <span><i class="fa fa-comment"></i> <%= photo.comments.count %></span>

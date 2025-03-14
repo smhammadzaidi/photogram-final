@@ -17,7 +17,7 @@
               <% end %>
             <% end %>
             <div class="card-body">
-              <p class="card-text"><%= truncate(photo.caption, length: 100) %></p>
+              <p class="card-text"><%= photo.caption %></p>
               <div class="photo-stats">
                 <span><i class="fa fa-heart"></i> <%= photo.likes.count %></span>
                 <span><i class="fa fa-comment"></i> <%= photo.comments.count %></span>

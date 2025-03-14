@@ -13,14 +13,6 @@ class FollowRequest < ApplicationRecord
   scope :accepted, -> { where(status: "accepted") }
   scope :rejected, -> { where(status: "rejected") }
   
-  # From the ERD, we can see the FollowRequest model has these attributes:
-  # id (integer, PK)
-  # created_at (datetime)
-  # recipient_id (integer, FK)
-  # sender_id (integer, FK)
-  # status (string)
-  # updated_at (datetime)
-  
   private
   
   def set_status_based_on_privacy

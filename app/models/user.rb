@@ -14,20 +14,6 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   
-  # From the ERD, we can see the User model has these attributes:
-  # id (integer, PK)
-  # username (string)
-  # email (string)
-  # encrypted_password (string)
-  # private (boolean)
-  # likes_count (integer)
-  # comments_count (integer)
-  # remember_created_at (datetime)
-  # reset_password_sent_at (datetime)
-  # reset_password_token (string)
-  # created_at (datetime)
-  # updated_at (datetime)
-  
   # Helper methods for follow functionality
   def accepted_sent_follow_requests
     sent_follow_requests.where(status: "accepted")

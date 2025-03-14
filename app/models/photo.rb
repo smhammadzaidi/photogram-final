@@ -22,14 +22,4 @@ class Photo < ApplicationRecord
   def like_by(user)
     likes.find_by(fan: user)
   end
-  
-  # From the ERD, we can see the Photo model has these attributes:
-  # id (integer, PK)
-  # caption (text)
-  # comments_count (integer)
-  # created_at (datetime)
-  # image (string)
-  # likes_count (integer)
-  # owner_id (integer, FK)
-  # updated_at (datetime)
 end 

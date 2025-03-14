@@ -20,7 +20,7 @@ class PhotosController < ApplicationController
     @photo = current_user.photos.new(photo_params)
     
     if @photo.save
-      redirect_to @photo, notice: "Photo was successfully created."
+      redirect_to root_path, notice: "Photo was successfully created."
     else
       render :new
     end

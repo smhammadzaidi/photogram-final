@@ -24,7 +24,7 @@
           <%= link_to "Add Photo", new_photo_path %>
           <%= link_to "My Profile", user_path(current_user) %>
           <%= link_to "Edit Profile", edit_user_registration_path %>
-          <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
         <% else %>
           <%= link_to "All users", users_path %>
           <%= link_to "All public photos", photos_path %>

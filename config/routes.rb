@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   # Root route
   root "photos#index"
   
-  # Username-based routes
-  get '/users/:username', to: 'users#show', as: 'username'
-  get '/users/:username/feed', to: 'users#feed', as: 'user_feed'
+  # Username-based routes - these need to be before resources :users
+  get '/users/:username', to: 'users#show', as: 'username_user'
+  get '/users/:username/feed', to: 'users#feed', as: 'username_feed'
   
   # Resources
   resources :photos

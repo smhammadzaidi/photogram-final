@@ -57,10 +57,11 @@
     
     <% if user_signed_in? %>
       <div class="comment-form">
-        <%= form_with(model: @comment, local: true) do |form| %>
+        <%= form_with(model: Comment.new, local: true) do |form| %>
           <%= form.hidden_field :photo_id, value: @photo.id %>
           <%= form.hidden_field :author_id, value: current_user.id %>
           <div class="form-group">
+            <%= form.label :body, "Comment" %>
             <%= form.text_area :body, class: "form-control", placeholder: "Add a comment...", required: true %>
           </div>
           <%= form.submit "Post Comment", class: "btn btn-primary" %>

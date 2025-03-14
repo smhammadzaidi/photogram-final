@@ -6,7 +6,17 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find_by(username: params[:username]) || User.find(params[:id])
+    if params[:username]
+      @user = User.find_by(username: params[:username])
+    elsif params[:id]
+      @user = User.find(params[:id])
+    end
+    
+    if @user.nil?
+      redirect_to users_path, alert: "User not found."
+      return
+    end
+    
     @photos = @user.photos.order(created_at: :desc)
     
     if @user.private? && @user != current_user
@@ -19,6 +29,10 @@ class UsersController < ApplicationController
   def feed
     if params[:username]
       @user = User.find_by(username: params[:username])
+      if @user.nil?
+        redirect_to users_path, alert: "User not found."
+        return
+      end
       @photos = @user.feed_photos.order(created_at: :desc)
     else
       @photos = current_user.feed_photos.order(created_at: :desc)
